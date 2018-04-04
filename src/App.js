@@ -5,82 +5,76 @@ import './App.css';
 class Navbar extends Component {
   render() {
     return (
-      <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-          <a class="p-2 text-dark" href="#">Features</a>
-          <a class="p-2 text-dark" href="#">Enterprise</a>
-          <a class="p-2 text-dark" href="#">Support</a>
-          <a class="p-2 text-dark" href="#">Pricing</a>
+      <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h5 className="my-0 mr-md-auto font-weight-normal">Company name</h5>
+        <nav className="my-2 my-md-0 mr-md-3">
+          <a className="p-2 text-dark" href="#">Features</a>
+          <a className="p-2 text-dark" href="#">Enterprise</a>
+          <a className="p-2 text-dark" href="#">Support</a>
+          <a className="p-2 text-dark" href="#">Pricing</a>
         </nav>
-        <a class="btn btn-outline-primary" href="#">Sign up</a>
+        <a className="btn btn-outline-primary" href="#">Sign up</a>
       </div>
     );
   }
 }
 
-
-
-class Prod1 extends Component {
+class Product extends Component {
   render() {
     return (
-      <div class="card mb-4 box-shadow">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">Free</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>10 users included</li>
-            <li>2 GB of storage</li>
-            <li>Email support</li>
-            <li>Help center access</li>
-          </ul>
-          <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+      <div className="container">
+        <div className="card-deck mb-3 text-center">
+          <div className="card mb-4 box-shadow">
+            <div className="card-header">
+              <h4 className="my-0 font-weight-normal">{this.props.type}</h4>
+            </div>
+            <div className="card-body">
+              <h1 className="card-title pricing-card-title">{this.props.price} <small className="text-muted">/ mo</small></h1>
+              <ul className="list-unstyled mt-3 mb-4">
+                <li>{this.props.users}</li>
+                <li>{this.props.storage}</li>
+                <li>{this.props.support}</li>
+                <li>{this.props.help}</li>
+              </ul>
+              <button type="button" className="btn btn-lg btn-block btn-outline-primary">{this.props.sign}</button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-class Prod2 extends Component {
+class Button extends Component {
   render() {
     return (
-      <div class="card mb-4 box-shadow">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">Pro</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>20 users included</li>
-            <li>10 GB of storage</li>
-            <li>Priority email support</li>
-            <li>Help center access</li>
-          </ul>
-          <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
-        </div>
-      </div>
+      <button onClick={this.props.onClick}>
+        Product {this.props.product}
+      </button>
     );
   }
 }
 
-class Prod3 extends Component {
+class ButtonSet extends Component {
+  renderButton(i) {
+    return (
+      <Button
+        product={i}
+        onClick={() => this.props.onClick(i)}
+      />
+    );
+  }
+
   render() {
     return (
-      <div class="card mb-4 box-shadow">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">Enterprise</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>30 users included</li>
-            <li>15 GB of storage</li>
-            <li>Phone and email support</li>
-            <li>Help center access</li>
-          </ul>
-          <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+      <div className="container">
+        <div className="row">
+          <div className="col-6">
+            {this.renderButton(1)}
+            {this.renderButton(2)}
+            {this.renderButton(3)}
+            {this.renderButton(4)}
+          </div>
         </div>
       </div>
     );
@@ -88,98 +82,87 @@ class Prod3 extends Component {
 }
 
 
-class Pricing extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tblNum: 1,
+      product: 1,
+      type: 'Free',
+      price: '$0',
+      users: '10 users included',
+      storage: '2 GB of storage',
+      support: 'Email support',
+      help: 'Help center access',
+      sign: 'Sign up for free',
     };
   }
 
-  changeProd1() {
-    this.setState({
-      tblNum: 1,
-    });
+  handleClick(i) {
+    if (i === 1) {
+      this.setState({
+        product: 1,
+        type: 'Free',
+        price: '$0',
+        users: '10 users included',
+        storage: '2 GB of storage',
+        support: 'Email support',
+        help: 'Help center access',
+        sign: 'Sign up for free',
+      });
+    } else if (i === 2) {
+      this.setState({
+        product: 2,
+        type: 'Pro',
+        price: '$15',
+        users: '20 users included',
+        storage: '10 GB of storage',
+        support: 'Priority Email support',
+        help: 'Help center access',
+        sign: 'Get started',
+      });
+    } else if (i === 3) {
+      this.setState({
+        product: 3,
+        type: 'Enterprise',
+        price: '$29',
+        users: '30 users included',
+        storage: '15 GB of storage',
+        support: 'Phone and email support',
+        help: 'Help center access',
+        sign: 'Contact us',
+      });
+    } else if (i === 4) {
+      this.setState({
+        product: 4,
+        type: 'Ultimate',
+        price: '$39',
+        users: '40 users included',
+        storage: '25 GB of storage',
+        support: 'Unlimited phone and email support',
+        help: 'Exclusive help center access',
+        sign: 'Most awesome deal',
+      });
+    }
   }
-  changeProd2() {
-    this.setState({
-      tblNum: 2,
-    });
-  }
-  changeProd3() {
-    this.setState({
-      tblNum: 3,
-    });
-  }
-
-  render() {
-    console.log(this.state.tblNum);
-
-    if (this.state.tblNum === 1) {
-      return (
-        <div>
-          <div class="container">
-            <div class="row">
-              <div class="col-6">
-                <button onClick={() => this.changeProd2()}>Product 2</button>
-                <button onClick={() => this.changeProd3()}>Product 3</button>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="card-deck mb-3 text-center">
-              <Prod1 />
-            </div>
-          </div>
-        </div>
-      );
-    } else if (this.state.tblNum === 2) {
-      return (
-        <div>
-          <div class="container">
-            <div class="row">
-              <div class="col-6">
-                <button onClick={() => this.changeProd1()}>Product 1</button>
-                <button onClick={() => this.changeProd3()}>Product 3</button>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="card-deck mb-3 text-center">
-              <Prod2 />
-            </div>
-          </div>
-        </div>
-      );
-    } 
-    return (
-      <div>
-        <div class="container">
-          <div class="row">
-            <div class="col-6">
-              <button onClick={() => this.changeProd1()}>Product 1</button>
-              <button onClick={() => this.changeProd2()}>Product 2</button>
-            </div>
-          </div>
-        </div>
-          <div class="container">
-            <div class="card-deck mb-3 text-center">
-              <Prod3 />
-            </div>
-          </div>
-      </div>
-    );
-  }
-}
-
-class App extends Component {
-
 
   render() {
     return (
       <div>
         <Navbar />
-        <Pricing />
+        <ButtonSet 
+          product={this.state.product}
+          onClick={(i) => this.handleClick(i)}
+        />
+        <Product 
+          product={this.state.product}
+          type={this.state.type}
+          price={this.state.price}
+          users={this.state.users}
+          storage={this.state.storage}
+          support={this.state.support}
+          help={this.state.help}
+          sign={this.state.sign}
+        />
       </div>
     );
   }
